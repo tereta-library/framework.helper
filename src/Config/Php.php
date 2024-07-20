@@ -12,7 +12,7 @@ class Php implements Config
     public function toString(array|object $content): string
     {
         $result = "<?php declare(strict_types=1);\n\n";
-        $result .= "return " . $this->arrayToString($content) . "\n";
+        $result .= "return " . $this->arrayToString($content) . ";\n";
 
         return $result;
     }
