@@ -22,23 +22,27 @@ class Php implements Config
         $arrayCode = "[\n";
 
         foreach ($array as $key => $value) {
-            $arrayCode .= $indentation . '    ';
+            $item = $indentation . '    ';
 
             if (is_string($key)) {
-                $arrayCode .= "'" . addslashes($key) . "' => ";
+                $item .= "'" . addslashes($key) . "' => ";
+            } else if (is_int($key)) {
+                $item .= $key . ' => ';
             } else {
-                $arrayCode .= $key . ' => ';
+                continue;
             }
 
             if (is_array($value)) {
-                $arrayCode .= $this->arrayToString($value, $indent + 1);
+                $item .= $this->arrayToString($value, $indent + 1);
+            } elseif (is_bool($value)) {
+                $item .= $value ? 'true' : 'false';
             } elseif (is_string($value)) {
-                $arrayCode .= "'" . addslashes($value) . "'";
+                $item .= "'" . addslashes($value) . "'";
             } else {
-                $arrayCode .= $value;
+                continue;
             }
 
-            $arrayCode .= ",\n";
+            $arrayCode .= $item . ",\n";
         }
 
         $arrayCode .= $indentation . ']';

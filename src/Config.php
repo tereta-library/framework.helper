@@ -45,7 +45,7 @@ class Config extends ValueObject
 
     public function load(string $path): static
     {
-        $this->data = $this->adapter->load($path);
+        $this->setData($this->adapter->load($path));
 
         return $this;
     }
