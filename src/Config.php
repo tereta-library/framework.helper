@@ -47,4 +47,9 @@ class Config
 
         return $this;
     }
+
+    public function getData(): array|object
+    {
+        return $this->data;
+    }
 }
