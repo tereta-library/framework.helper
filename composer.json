@@ -1,5 +1,5 @@
 {
-    "name": "tereta/framework.helpers",
+    "name": "tereta/framework.helper",
     "type": "library",
     "autoload": {
         "psr-4": {
