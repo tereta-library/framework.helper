@@ -12,7 +12,7 @@ class Php implements Config
     public function toString(array|object $content): string
     {
         $result = "<?php declare(strict_types=1);\n\n";
-        $result .= "return " . $this->arrayToString($content) . ";\n";
+        $result .= "return " . $this->arrayToString($content) . "\n";
 
         return $result;
     }
@@ -22,27 +22,23 @@ class Php implements Config
         $arrayCode = "[\n";
 
         foreach ($array as $key => $value) {
-            $item = $indentation . '    ';
+            $arrayCode .= $indentation . '    ';
 
             if (is_string($key)) {
-                $item .= "'" . addslashes($key) . "' => ";
-            } elseif (is_int($key)) {
-                $item .= $key . ' => ';
+                $arrayCode .= "'" . addslashes($key) . "' => ";
             } else {
-                continue;
+                $arrayCode .= $key . ' => ';
             }
 
-            if (is_bool($value)) {
-                $item .= $value ? 'true' : 'false';
-            } elseif (is_array($value)) {
-                $item .= $this->arrayToString($value, $indent + 1);
+            if (is_array($value)) {
+                $arrayCode .= $this->arrayToString($value, $indent + 1);
             } elseif (is_string($value)) {
-                $item .= "'" . addslashes($value) . "'";
+                $arrayCode .= "'" . addslashes($value) . "'";
             } else {
-                continue;
+                $arrayCode .= $value;
             }
 
-            $arrayCode .= $item . ",\n";
+            $arrayCode .= ",\n";
         }
 
         $arrayCode .= $indentation . ']';

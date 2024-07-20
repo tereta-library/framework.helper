@@ -4,11 +4,11 @@ namespace Framework\Helper;
 
 use Exception;
 use Framework\Helper\Interface\Config as ConfigInterface;
-use Framework\Pattern\ValueObject;
+
 /**
  * Framework\Helper\Config
  */
-class Config extends ValueObject
+class Config
 {
     private array $map = [
         'php' => 'Framework\Helper\Config\Php'
@@ -16,11 +16,9 @@ class Config extends ValueObject
 
     private ConfigInterface $adapter;
 
-    public function __construct(string $adapter = 'php', array|object &$data = [])
+    public function __construct(string $adapter = 'php', private array|object &$data = [])
     {
         $this->setAdapter($adapter);
-
-        parent::__construct($data);
     }
 
     public function setAdapter(string $adapter): static
@@ -38,14 +36,14 @@ class Config extends ValueObject
 
     public function save(string $path): static
     {
-        $this->adapter->save($path, $this->getData());
+        $this->adapter->save($path, $this->data);
 
         return $this;
     }
 
     public function load(string $path): static
     {
-        $this->setData($this->adapter->load($path));
+        $this->data = $this->adapter->load($path);
 
         return $this;
     }
