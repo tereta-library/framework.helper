@@ -5,6 +5,9 @@ namespace Framework\Helper;
 use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
 
+/**
+ * Framework\Helper\File
+ */
 class File
 {
     /**
@@ -34,7 +37,7 @@ class File
                 $filePath = $file->getPathname();
                 $relativePath = str_replace($dir . DIRECTORY_SEPARATOR, '', $filePath);
 
-                if (preg_match($regex, $relativePath)) {
+                if (preg_match($regularExpression, $relativePath)) {
                     $files[] = $relativePath;
                 }
             }
