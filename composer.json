@@ -1,0 +1,16 @@
+{
+    "name": "tereta/framework.helpers",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Framework\\Helper\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Tereta Alexander",
+            "email": "tereta.alexander@gmail.com"
+        }
+    ],
+    "require": {}
+}
