@@ -70,6 +70,9 @@ class Php implements Config
 
     public function load(string $path): array|object
     {
+        if (!file_exists($path)) {
+            return [];
+        }
         return require $path;
     }
 }

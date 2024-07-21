@@ -24,18 +24,39 @@ use Framework\Pattern\ValueObject;
  */
 class Config extends ValueObject
 {
+    /**
+     * @var array|string[]
+     */
     private array $map = [
         'php' => 'Framework\Helper\Config\Php'
     ];
 
+    /**
+     * @var string|null $path
+     */
+    private ?string $path = null;
+
+    /**
+     * @var ConfigInterface
+     */
     private ConfigInterface $adapter;
 
+    /**
+     * @param string $adapter
+     * @param array|object $data
+     * @throws Exception
+     */
     public function __construct(string $adapter = 'php', private array|object &$data = [])
     {
         parent::__construct($data);
         $this->setAdapter($adapter);
     }
 
+    /**
+     * @param string $adapter
+     * @return $this
+     * @throws Exception
+     */
     public function setAdapter(string $adapter): static
     {
         $class = $this->map[$adapter] ?? null;
@@ -49,15 +70,28 @@ class Config extends ValueObject
         return $this;
     }
 
-    public function save(string $path): static
+    /**
+     * @param string|null $path
+     * @return $this
+     * @throws Exception
+     */
+    public function save(?string $path = null): static
     {
-        $this->adapter->save($path, $this->data);
+        if ($path) $this->path = $path;
+        if (!$this->path) throw new Exception('Path to save configuration is not set.');
+
+        $this->adapter->save($this->path, $this->getData());
 
         return $this;
     }
 
+    /**
+     * @param string $path
+     * @return $this
+     */
     public function load(string $path): static
     {
+        $this->path = $path;
         $this->setData($this->adapter->load($path));
 
         return $this;
