@@ -6,7 +6,20 @@ use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
 
 /**
- * Framework\Helper\File
+ * ·······································································
+ * : _____                        _                     _                :
+ * :|_   _|   ___   _ __    ___  | |_    __ _        __| |   ___  __   __:
+ * :  | |    / _ \ | '__|  / _ \ | __|  / _` |      / _` |  / _ \ \ \ / /:
+ * :  | |   |  __/ | |    |  __/ | |_  | (_| |  _  | (_| | |  __/  \ V / :
+ * :  |_|    \___| |_|     \___|  \__|  \__,_| (_)  \__,_|  \___|   \_/  :
+ * ·······································································
+ * ···························WWW.TERETA.DEV······························
+ * ·······································································
+ *
+ * @class Framework\Helper\File
+ * @package Framework\Helper
+ * @link https://tereta.dev
+ * @author Tereta Alexander <tereta.alexander@gmail.com>
  */
 class File
 {
@@ -27,6 +40,10 @@ class File
     public static function getFiles(string $dir, string $regularExpression): array
     {
         $files = [];
+
+        if (!is_dir($dir)) {
+            return [];
+        }
 
         $iterator = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator($dir)
