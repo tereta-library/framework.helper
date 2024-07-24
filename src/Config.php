@@ -27,7 +27,7 @@ class Config extends ValueObject
     /**
      * @var array|string[]
      */
-    private array $map = [
+    private array $adapterArray = [
         'php' => 'Framework\Helper\Config\Php'
     ];
 
@@ -59,7 +59,7 @@ class Config extends ValueObject
      */
     public function setAdapter(string $adapter): static
     {
-        $class = $this->map[$adapter] ?? null;
+        $class = $this->adapterArray[$adapter] ?? null;
         if (!$class) throw new Exception(
             "The {$adapter} not found. " .
             "Use one of " . implode(", ", array_keys($this->map)) . " adapters."
