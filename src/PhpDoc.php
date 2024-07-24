@@ -4,6 +4,7 @@ namespace Framework\Helper;
 
 use ReflectionMethod;
 use ReflectionException;
+use ReflectionClass;
 
 /**
  * ·······································································
@@ -25,6 +26,17 @@ class PhpDoc
 {
     /**
      * @param string $class
+     * @return array
+     * @throws ReflectionException
+     */
+    public static function getClassVariables(string $class): array
+    {
+        $reflectionClass = new ReflectionClass($class);
+        return self::getVariables($reflectionClass->getDocComment());
+    }
+
+    /**
+     * @param string $class
      * @param string $method
      * @return array
      * @throws ReflectionException
@@ -32,9 +44,16 @@ class PhpDoc
     public static function getMethodVariables(string $class, string $method): array
     {
         $reflectionMethod = new ReflectionMethod($class, $method);
-        $variables = [];
+        return self::getVariables($reflectionMethod->getDocComment());
+    }
 
-        $docComment = $reflectionMethod->getDocComment();
+    /**
+     * @param string $docComment
+     * @return array
+     */
+    private static function getVariables(string $docComment): array
+    {
+        $variables = [];
         if (!$docComment) {
             return [];
         }
