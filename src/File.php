@@ -40,6 +40,7 @@ class File
     public static function getFiles(string $dir, string $regularExpression): array
     {
         $files = [];
+        $dir = rtrim($dir, DIRECTORY_SEPARATOR);
 
         if (!is_dir($dir)) {
             return [];
