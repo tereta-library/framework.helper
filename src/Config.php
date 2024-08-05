@@ -74,6 +74,30 @@ class Config extends ValueObject
     }
 
     /**
+     * @param string $key
+     * @param mixed $value
+     * @return $this
+     */
+    public function set(string $key, mixed $value): static
+    {
+        $source = $this->getData();
+        $config = ArrayManager::convert($key, $value);
+        $source = ArrayManager::merge($source, $config);
+        $this->setData($source);
+
+        return $this;
+    }
+
+    /**
+     * @param string $key
+     * @return mixed
+     */
+    public function get(string $key): mixed
+    {
+        return ArrayManager::fetch($key, $this->getData());
+    }
+
+    /**
      * @param string|null $path
      * @return $this
      * @throws Exception
