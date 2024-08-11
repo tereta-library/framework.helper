@@ -1,5 +1,8 @@
 {
     "name": "tereta/framework.helpers",
+    "description": "Helpers of framework to speed up development",
+    "license": "Apache-2.0",
+    "version": "0.0.19",
     "type": "library",
     "autoload": {
         "psr-4": {
