@@ -47,7 +47,7 @@ class PhpDoc
     public static function getMethodVariables(string $class, string $method): array
     {
         $reflectionMethod = new ReflectionMethod($class, $method);
-        return self::getVariables($reflectionMethod->getDocComment());
+        return self::getVariables((string) $reflectionMethod->getDocComment());
     }
 
     /**
