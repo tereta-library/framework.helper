@@ -27,6 +27,23 @@ use RecursiveDirectoryIterator;
 class File
 {
     /**
+     * @var File|null $instance
+     */
+    private static ?File $instance = null;
+
+    /**
+     * @return File
+     */
+    public static function getInstance(): File
+    {
+        if (static::$instance) {
+            return static::$instance;
+        }
+
+        return static::$instance = new self();
+    }
+
+    /**
      * The function will return list of found files by regular expression
      * For example getFiles(getcwd(), '/app\/modules\/.*\/.*\/Module.php/Usi') will return array with files in format
      *     [
@@ -65,5 +82,31 @@ class File
         }
 
         return $files;
+    }
+
+    /**
+     * @param string $path
+     * @return bool
+     */
+    public function remove(string $path): bool
+    {
+        if (is_file($path)) {
+            return unlink($path);
+        }
+
+        $iterator = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::CHILD_FIRST
+        );
+
+        foreach ($iterator as $item) {
+            if ($item->isDir()) {
+                rmdir($item->getRealPath());
+            } else {
+                unlink($item->getRealPath());
+            }
+        }
+
+        return rmdir($path);
     }
 }
